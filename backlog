@@ -1,0 +1,522 @@
+Below is a **detailed and comprehensive Agile backlog** for your AI-powered construction marketplace app.
+It includes **Epics → User Stories → Acceptance Criteria**, written in clear markdown so you can drop it directly into GitHub (e.g., `/docs/backlog.md`).
+
+This backlog is designed for **MVP → V1 → V2** scalability and is formatted following best practices used by YC startups, Scrum teams, and product engineering groups.
+
+---
+
+# **NailiT Scope – Product Backlog (Epics & User Stories)**
+
+*Last updated: 2025*
+
+---
+
+# **EPIC 1 — User Accounts & Authentication**
+
+### **Goal:**
+
+Enable homeowners and contractors to create accounts, log in, and manage their profile details securely.
+
+---
+
+## **User Story 1.1 — User Registration**
+
+**As a** new user
+**I want** to create an account with email/password
+**So that** I can access the app.
+
+**Acceptance Criteria**
+
+* User can register with email, first name, last name, password.
+* Validation for strong password.
+* Unique email enforced.
+* Email verification optional for MVP, required in V1.
+
+---
+
+## **User Story 1.2 — Login & Logout**
+
+**As a** user
+**I want** to log in and out securely
+**So that** my session is protected.
+
+**Acceptance Criteria**
+
+* Login API accepts email + password.
+* Session token or JWT issued.
+* Logout clears session/token.
+
+---
+
+## **User Story 1.3 — Profile Management**
+
+**As a** user
+**I want** to update my profile details
+**So that** my information is accurate.
+
+**Acceptance Criteria**
+
+* Edit name, phone, location, avatar.
+* Delete account (soft delete).
+
+---
+
+# **EPIC 2 — Contractor Profiles & Skills**
+
+### **Goal:**
+
+Allow contractors to create professional profiles, upload photos/videos, list skills, and build trust.
+
+---
+
+## **User Story 2.1 — Create Contractor Profile**
+
+**As a** contractor
+**I want** to create a professional profile
+**So that** homeowners can evaluate my skills.
+
+**Acceptance Criteria**
+
+* Add company name, bio, experience, service area.
+* Add license & insurance details.
+* Data stored in `contractor_profiles`.
+
+---
+
+## **User Story 2.2 — Upload Contractor Portfolio Media**
+
+**As a** contractor
+**I want** to upload photos/videos of my work
+**So that** I can showcase past projects.
+
+**Acceptance Criteria**
+
+* Accepts multiple images/videos.
+* Connects to cloud storage (S3).
+* Displays media in portfolio gallery.
+
+---
+
+## **User Story 2.3 — Add Skills**
+
+**As a** contractor
+**I want** to tag my skills (e.g., drywall, plumbing)
+**So that** I can be matched to the right projects.
+
+**Acceptance Criteria**
+
+* Contractors can choose from predefined skills.
+* Many-to-many relationship saved in `contractor_skills`.
+
+---
+
+## **User Story 2.4 — Contractor Minimum Job Size**
+
+**As a** contractor
+**I want** to set a minimum job value
+**So that** I don't get small/unqualified leads.
+
+**Acceptance Criteria**
+
+* Contractors can enter min job size in USD.
+* Shown to homeowners when viewing contractor.
+
+---
+
+# **EPIC 3 — Project Creation & Photo Upload**
+
+### **Goal:**
+
+Enable homeowners to submit project details, upload photos, and prepare for analysis.
+
+---
+
+## **User Story 3.1 — Create a New Project**
+
+**As a** homeowner
+**I want** to describe my project
+**So that** I can receive AI analysis and contractor bids.
+
+**Acceptance Criteria**
+
+* Form captures desc, budget, location, property type.
+* Photos optional but accepted.
+* Stored in `projects` & `project_media`.
+
+---
+
+## **User Story 3.2 — Upload Project Photos/Videos**
+
+**As a** homeowner
+**I want** to upload photos
+**So that** AI and contractors can better understand my project.
+
+**Acceptance Criteria**
+
+* Upload multiple files.
+* Save URLs to `project_media`.
+* Preview before submitting.
+
+---
+
+# **EPIC 4 — AI Project Analyzer**
+
+### **Goal:**
+
+Provide homeowners with instant AI-generated scope, pricing, skillsets, questions, and a budget realism score.
+
+---
+
+## **User Story 4.1 — AI Scope of Work Generation**
+
+**As a** homeowner
+**I want** an AI-generated list of scope items
+**So that** I understand what the project requires.
+
+**Acceptance Criteria**
+
+* AI returns structured bullet list of work tasks.
+* Saved in `ai_analyses.scope_of_work_json`.
+
+---
+
+## **User Story 4.2 — AI Price Estimate**
+
+**As a** homeowner
+**I want** an estimated price range
+**So that** I can tell if my budget is realistic.
+
+**Acceptance Criteria**
+
+* AI outputs min and max pricing.
+* Display in UI.
+* Save in `ai_analyses`.
+
+---
+
+## **User Story 4.3 — Budget Likelihood Score**
+
+**As a** homeowner
+**I want** a rating (Very Unlikely → Highly Likely)
+**So that** I understand if my budget will attract skilled contractors.
+
+**Acceptance Criteria**
+
+* Algorithm/AI returns correct likelihood.
+* Save to `projects` + `ai_analyses`.
+* Visual UI bar indicator.
+
+---
+
+## **User Story 4.4 — Recommended Skillsets**
+
+**As a** homeowner
+**I want** to see required contractor skills
+**So that** I hire someone qualified.
+
+**Acceptance Criteria**
+
+* Skills generated by AI.
+* Cross-map to platform skills list.
+
+---
+
+## **User Story 4.5 — Questions to Ask Contractors**
+
+**As a** homeowner
+**I want** a list of questions to ask during quotes
+**So that** I avoid hiring unskilled contractors.
+
+**Acceptance Criteria**
+
+* 5–12 questions generated.
+* Displayed in UI.
+* Stored in `ai_analyses.questions_to_ask_json`.
+
+---
+
+# **EPIC 5 — Marketplace & Matching**
+
+### **Goal:**
+
+Connect homeowners with relevant contractors and enable discovery.
+
+---
+
+## **User Story 5.1 — Contractor Search**
+
+**As a** homeowner
+**I want** to search contractors by skill or location
+**So that** I can find qualified professionals.
+
+**Acceptance Criteria**
+
+* Filter by skillset, service area, rating, min job size.
+* Search results paginated.
+
+---
+
+## **User Story 5.2 — Contractor Profile View**
+
+**As a** homeowner
+**I want** to view detailed contractor profiles
+**So that** I can decide who to invite or hire.
+
+**Acceptance Criteria**
+
+* Show portfolio, bio, skills, experience, reviews.
+
+---
+
+## **User Story 5.3 — Invite Contractors to Bid**
+
+**As a** homeowner
+**I want** to invite specific contractors
+**So that** I receive targeted bids.
+
+**Acceptance Criteria**
+
+* Create `job_invites` entries.
+* Contractors receive notifications.
+
+---
+
+# **EPIC 6 — Bidding System**
+
+### **Goal:**
+
+Enable contractors to bid on projects, and homeowners to compare and accept bids.
+
+---
+
+## **User Story 6.1 — Submit a Bid**
+
+**As a** contractor
+**I want** to submit a bid with notes and price
+**So that** I can offer my services.
+
+**Acceptance Criteria**
+
+* Create `bids` entry with amount, summary.
+* Cannot submit >1 active bid per project.
+
+---
+
+## **User Story 6.2 — View All Bids**
+
+**As a** homeowner
+**I want** to view all contractor bids
+**So that** I can compare offers.
+
+**Acceptance Criteria**
+
+* Display list with price, notes, contractor info.
+
+---
+
+## **User Story 6.3 — Accept a Bid**
+
+**As a** homeowner
+**I want** to select the winning bid
+**So that** the project can be awarded.
+
+**Acceptance Criteria**
+
+* Creates `project_assignments`.
+* Updates bid status to `accepted`.
+* Notifies contractor.
+
+---
+
+## **User Story 6.4 — Decline Bids**
+
+**As a** homeowner
+**I want** to decline bids I don’t accept
+**So that** contractors know the status.
+
+**Acceptance Criteria**
+
+* Updates bid status to `declined`.
+* Sends a notification.
+
+---
+
+# **EPIC 7 — Messaging System**
+
+### **Goal:**
+
+Enable homeowners and contractors to communicate safely through the platform.
+
+---
+
+## **User Story 7.1 — Send Message**
+
+**As a** user
+**I want** to send messages to another user about a project
+**So that** we can communicate without direct contact info.
+
+**Acceptance Criteria**
+
+* Stored in `messages`.
+* Must reference `project_id`.
+
+---
+
+## **User Story 7.2 — View Conversation**
+
+**As a** user
+**I want** to see all messages for a project
+**So that** I can follow discussions.
+
+**Acceptance Criteria**
+
+* Sort by timestamp.
+* Mark messages as read when opened.
+
+---
+
+# **EPIC 8 — Reviews & Ratings**
+
+### **Goal:**
+
+Allow homeowners to review contractors after job completion.
+
+---
+
+## **User Story 8.1 — Leave a Review**
+
+**As a** homeowner
+**I want** to rate the contractor
+**So that** other users can evaluate them.
+
+**Acceptance Criteria**
+
+* 1–5 star rating + text comment.
+* One review per project.
+* Updates contractor’s average rating.
+
+---
+
+## **User Story 8.2 — View Contractor Reviews**
+
+**As a** homeowner
+**I want** to see reviews
+**So that** I can assess quality.
+
+**Acceptance Criteria**
+
+* Reviews appear on contractor profile.
+
+---
+
+# **EPIC 9 — Notifications**
+
+### **Goal:**
+
+Keep users updated about invites, bids, messages, and assignment events.
+
+---
+
+## **User Story 9.1 — Receive Bid Notification**
+
+Contractor → bid accepted
+Homeowner → new bid received
+
+---
+
+## **User Story 9.2 — Receive Message Notification**
+
+User notified when they receive a message.
+
+---
+
+## **User Story 9.3 — Job Invite Notification**
+
+Contractor notified when homeowner invites them to bid.
+
+---
+
+# **EPIC 10 — Admin Management (Moderation)**
+
+### **Goal:**
+
+Maintain platform quality and compliance.
+
+---
+
+## **User Story 10.1 — Admin Login**
+
+Admins can access moderation dashboard.
+
+---
+
+## **User Story 10.2 — Moderate Contractor Profiles**
+
+Admins can:
+
+* Approve/deny suspicious contractors
+* Review license/insurance info
+
+---
+
+## **User Story 10.3 — Manage Project Reports**
+
+Users can report:
+
+* Fraud
+* Low quality work
+* Inappropriate content
+
+Admins can investigate & resolve.
+
+---
+
+# **EPIC 11 — Payments & Escrow (Future V2)**
+
+### **Goal:**
+
+Enable deposits, escrow, milestone payments.
+
+---
+
+## **User Story 11.1 — Collect Deposit**
+
+Homeowners can pay deposit through Stripe.
+
+---
+
+## **User Story 11.2 — Release Payments**
+
+Milestone or final payment releases to contractor.
+
+---
+
+# **EPIC 12 — Feature Enhancements (Future)**
+
+### Ideas included:
+
+* 3D AI visualization of projects
+* Permit requirements checker
+* AI video analysis
+* Contractor CRM tools
+* Background checks
+* Dispute resolution center
+
+---
+
+# **Appendix — Backlog Summary Table**
+
+| Epic                    | Number of Stories | Status         |
+| ----------------------- | ----------------- | -------------- |
+| 1. User Accounts & Auth | 3                 | MVP            |
+| 2. Contractor Profiles  | 4                 | MVP            |
+| 3. Projects             | 2                 | MVP            |
+| 4. AI Analyzer          | 5                 | MVP            |
+| 5. Marketplace          | 3                 | V1             |
+| 6. Bidding              | 4                 | V1             |
+| 7. Messaging            | 2                 | V1             |
+| 8. Reviews              | 2                 | V2             |
+| 9. Notifications        | 3                 | V1             |
+| 10. Admin               | 3                 | V2             |
+| 11. Payments            | 2                 | V3             |
+| 12. Enhancements        | —                 | Future Roadmap |
